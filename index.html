@@ -18,7 +18,7 @@
         .then((values) => {
             document.querySelector(".text_box").innerHTML = JSON.stringify(values);
         }).catch(e =>{
-            document.querySelector(".text_box").innerHTML = e.message;
+            document.querySelector(".text_box").innerHTML = "error catched";
     });
 </script>
 </body>
