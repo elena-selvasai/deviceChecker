@@ -4,7 +4,7 @@ const app = express();
 const PORT = 8080;
 
 // 정적 파일 불러오기
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/"));
 
 // 라우팅 정의
 app.get("/", (req, res) => {
