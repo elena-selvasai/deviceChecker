@@ -18,7 +18,7 @@ if (userAgent.indexOf('windows') >= 0) {
             "architecture",
         ])
         .then((values) => {
-            system.platform = values.platform;
+            system.platform = values.platform.toLowerCase();
             if (values.mobile === true) {
                 system.mobile = true;
             }
@@ -35,7 +35,7 @@ function detect() {
             system.mobile = true;
         }
         if (md.userAgent() !== null) {
-            system.browser = md.userAgent();
+            system.browser = md.userAgent().toLowerCase();
         }
     }
     if (system.browser === undefined) {
