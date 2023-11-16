@@ -64,6 +64,10 @@ function getPlatform(agent) {
         system.platform = "iOS";
         system.mobile = true;
     }
+    if (system.platform === 'linux' && supportMultipleTouch()) {
+        system.platform = "android";
+        system.mobile = true;
+    }
 }
 
 function supportMultipleTouch() {
