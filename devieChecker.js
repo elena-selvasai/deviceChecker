@@ -39,31 +39,31 @@ function detect() {
         }
     }
     if (system.browser === undefined) {
-        system.browser = getBrowser(userAgent);
+        getBrowser(userAgent);
     }
     if (system.platform === undefined) {
-        system.platform = getPlatform(userAgent);
+        getPlatform(userAgent);
     }
     setResult();
-
 }
 
 function getPlatform(agent) {
-    let platform = undefined;
     if (/iphone|ipad/i.test(agent)) {
-        platform = "iOS";
+        system.platform = "iOS";
+        system.mobile = true;
     } else if (/android/i.test(agent)) {
-        platform = "android";
+        system.platform = "android";
+        system.mobile = true;
     } else if (/mac os/i.test(agent)) {
-        platform = "mac";
+        system.platform = "mac";
     } else if (/linux/i.test(agent)) {
-        platform = "linux";
+        system.platform = "linux";
     }
 
-    if (platform === 'mac' && supportMultipleTouch()) {
-        platform = "iOS";
+    if (system.platform === 'mac' && supportMultipleTouch()) {
+        system.platform = "iOS";
+        system.mobile = true;
     }
-    return platform;
 }
 
 function supportMultipleTouch() {
@@ -71,19 +71,17 @@ function supportMultipleTouch() {
 }
 
 function getBrowser(agent) {
-    let browser = undefined;
     if (agent.indexOf('trident') >= 0) {
-        browser = 'IE';
+        system.browser = 'IE';
     } else if (agent.indexOf('firefox') >= 0) {
-        browser = 'FIREFOX';
+        system.browser = 'FIREFOX';
     } else if (agent.indexOf('edg') >= 0) {
-        browser = 'EDGE';
+        system.browser = 'EDGE';
     } else if (agent.indexOf('chrome') >= 0) {
-        browser = 'CHROME';
+        system.browser = 'CHROME';
     } else if (agent.indexOf('safari') >= 0) {
-        browser = 'SAFARI';
+        system.browser = 'SAFARI';
     }
-    return browser;
 }
 
 function setResult() {
