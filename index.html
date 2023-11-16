@@ -6,22 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
 </head>
 <body>
-<span class="text_box"></span>
-<script>
-    if (navigator && navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-        navigator.userAgentData
-            .getHighEntropyValues([
-                "mobile",
-                "model",
-                "platform",
-                "architecture",
-            ])
-            .then((values) => {
-                document.querySelector(".text_box").innerHTML = JSON.stringify(values);
-            });
-    } else {
-        document.querySelector(".text_box").innerHTML = "not support";
-    }
-</script>
+<div>
+    <h1><span class="text_box"></span></h1></div>
+<script src="/js/devieChecker.js"></script>
 </body>
 </html>
