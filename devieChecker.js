@@ -4,69 +4,43 @@ var system = {
     // device: undefined,
     browser: undefined,
 }
+
 var userAgent = navigator.userAgent.toLowerCase();
-if (userAgent.indexOf('windows') >= 0) {
-    system.platform = "windows";
-    system.mobile = false;
-    detect();
-} else if (navigator && navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-    navigator.userAgentData
-        .getHighEntropyValues([
-            "mobile",
-            "model",
-            "platform",
-            "architecture",
-        ])
-        .then((values) => {
-            system.platform = values.platform.toLowerCase();
-            if (values.mobile === true) {
-                system.mobile = true;
-            }
-            detect();
-        });
-} else {
-    detect();
+if (system.browser === undefined) {
+    getBrowser(userAgent);
+}
+if (system.platform === undefined) {
+    getPlatform(userAgent);
 }
 
-function detect() {
-    if (system.mobile === undefined) {
-        let md = new MobileDetect(navigator.userAgent);
-        if (md.mobile() !== null) {
-            system.mobile = true;
-        }
-        if (md.userAgent() !== null) {
-            system.browser = md.userAgent().toLowerCase();
-        }
-    }
-    if (system.browser === undefined) {
-        getBrowser(userAgent);
-    }
-    if (system.platform === undefined) {
-        getPlatform(userAgent);
-    }
-    setResult();
-}
+setResult();
 
 function getPlatform(agent) {
-    if (/iphone|ipad/i.test(agent)) {
+    if (/windows/i.test(agent)) {
+        system.platform = "windows";
+        system.mobile = false;
+    } else if (/iphone|ipad/i.test(agent)) {
         system.platform = "iOS";
         system.mobile = true;
     } else if (/android/i.test(agent)) {
         system.platform = "android";
         system.mobile = true;
     } else if (/mac os/i.test(agent)) {
-        system.platform = "mac";
+        if (supportMultipleTouch()) {
+            system.platform = "iOS";
+            system.mobile = true;
+        } else {
+            system.platform = "mac";
+            system.mobile = false;
+        }
     } else if (/linux/i.test(agent)) {
-        system.platform = "linux";
-    }
-
-    if (system.platform === 'mac' && supportMultipleTouch()) {
-        system.platform = "iOS";
-        system.mobile = true;
-    }
-    if (system.platform === 'linux' && supportMultipleTouch()) {
-        system.platform = "android";
-        system.mobile = true;
+        if (supportMultipleTouch()) {
+            system.platform = "android";
+            system.mobile = true;
+        } else {
+            system.platform = "linux";
+            system.mobile = false;
+        }
     }
 }
 
@@ -76,15 +50,15 @@ function supportMultipleTouch() {
 
 function getBrowser(agent) {
     if (agent.indexOf('trident') >= 0) {
-        system.browser = 'IE';
+        system.browser = 'ie';
     } else if (agent.indexOf('firefox') >= 0) {
-        system.browser = 'FIREFOX';
+        system.browser = 'firefox';
     } else if (agent.indexOf('edg') >= 0) {
-        system.browser = 'EDGE';
+        system.browser = 'edge';
     } else if (agent.indexOf('chrome') >= 0) {
-        system.browser = 'CHROME';
+        system.browser = 'chrome';
     } else if (agent.indexOf('safari') >= 0) {
-        system.browser = 'SAFARI';
+        system.browser = 'safari';
     }
 }
 
