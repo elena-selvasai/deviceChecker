@@ -29,7 +29,7 @@ if (userAgent.indexOf('windows') >= 0) {
 }
 
 function detect() {
-    if(system.mobile === undefined) {
+    if (system.mobile === undefined) {
         let md = new MobileDetect(navigator.userAgent);
         if (md.mobile() !== null) {
             system.mobile = true;
@@ -38,12 +38,38 @@ function detect() {
             system.browser = md.userAgent();
         }
     }
-    if(system.browser === undefined) {
+    if (system.browser === undefined) {
         system.browser = getBrowser(userAgent);
+    }
+    if (system.platform === undefined) {
+        system.platform = getPlatform(userAgent);
     }
     setResult();
 
 }
+
+function getPlatform(agent) {
+    let platform = undefined;
+    if (/iphone|ipad/i.test(agent)) {
+        platform = "iOS";
+    } else if (/android/i.test(agent)) {
+        platform = "android";
+    } else if (/mac os/i.test(agent)) {
+        platform = "mac";
+    } else if (/linux/i.test(agent)) {
+        platform = "linux";
+    }
+
+    if (platform === 'mac' && supportMultipleTouch()) {
+        platform = "iOS";
+    }
+    return platform;
+}
+
+function supportMultipleTouch() {
+    return navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
+}
+
 function getBrowser(agent) {
     let browser = undefined;
     if (agent.indexOf('trident') >= 0) {
@@ -59,6 +85,7 @@ function getBrowser(agent) {
     }
     return browser;
 }
-function setResult(){
+
+function setResult() {
     document.querySelector(".text_box").innerHTML = `mobile:${system.mobile} platform:${system.platform} browser:${system.browser}`;
 }
