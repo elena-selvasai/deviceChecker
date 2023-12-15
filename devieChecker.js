@@ -15,6 +15,7 @@ if (system.platform === undefined) {
 
 setWindowSize();
 setResult();
+window.addEventListener('resize', () => setTimeout(() => setWindowSize(), 300));
 
 function getPlatform(agent) {
     if (/windows/i.test(agent)) {
