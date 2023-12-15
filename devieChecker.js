@@ -13,6 +13,7 @@ if (system.platform === undefined) {
     getPlatform(userAgent);
 }
 
+setWindowSize();
 setResult();
 
 function getPlatform(agent) {
@@ -64,4 +65,13 @@ function getBrowser(agent) {
 
 function setResult() {
     document.querySelector(".text_box").innerHTML = `mobile:${system.mobile} platform:${system.platform} browser:${system.browser}`;
+}
+
+function setWindowSize() {
+    let text = "<h1>WindowSize</h1>";
+    text += `window.innerWidth/innerHeight<br>width:${window.innerWidth} height:${window.innerHeight}`
+        +`<br><br>document.documentElement.clientWidth/clientHeight<br>width:${document.documentElement.clientWidth} height:${document.documentElement.clientHeight}`
+        +`<br><br>document.body.clientWidth/clientHeight<br>width:${document.body.clientWidth} height:${document.body.clientHeight}`
+        +`<br><br>screen.width/height<br>width:${screen.width} height:${screen.height}`
+    document.querySelector(".size_box").innerHTML = text;
 }
