@@ -17,6 +17,26 @@ setWindowSize();
 setResult();
 window.addEventListener('resize', () => setTimeout(() => setWindowSize(), 300));
 
+function handleDeviceChange(event) {
+    console.log('Media devices changed:', event);
+    setMediaInfo('Media devices changed:' + JSON.stringify(event));
+    // You can check event for specific changes and take appropriate actions
+}
+
+// Add an event listener for device changes
+navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
+
+// Initial check for available media devices
+navigator.mediaDevices.enumerateDevices()
+    .then(function (devices) {
+        setMediaInfo('Available media devices:' + devices);
+        console.log('Available media devices:', devices);
+    })
+    .catch(function (error) {
+        setMediaInfo('Error enumerating devices:'+ error);
+        console.error('Error enumerating devices:', error);
+    });
+
 function getPlatform(agent) {
     if (/windows/i.test(agent)) {
         system.platform = "windows";
@@ -71,8 +91,12 @@ function setResult() {
 function setWindowSize() {
     let text = "<h1>WindowSize</h1>";
     text += `window.innerWidth/innerHeight<br>width:${window.innerWidth} height:${window.innerHeight}`
-        +`<br><br>document.documentElement.clientWidth/clientHeight<br>width:${document.documentElement.clientWidth} height:${document.documentElement.clientHeight}`
-        +`<br><br>document.body.clientWidth/clientHeight<br>width:${document.body.clientWidth} height:${document.body.clientHeight}`
-        +`<br><br>screen.width/height<br>width:${screen.width} height:${screen.height}`
+        + `<br><br>document.documentElement.clientWidth/clientHeight<br>width:${document.documentElement.clientWidth} height:${document.documentElement.clientHeight}`
+        + `<br><br>document.body.clientWidth/clientHeight<br>width:${document.body.clientWidth} height:${document.body.clientHeight}`
+        + `<br><br>screen.width/height<br>width:${screen.width} height:${screen.height}`
     document.querySelector(".size_box").innerHTML = text;
+}
+
+function setMediaInfo(text) {
+    document.querySelector(".media_box").innerHTML = text;
 }
