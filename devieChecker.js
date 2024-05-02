@@ -29,17 +29,6 @@ function handleDeviceChange(event) {
 // Add an event listener for device changes
 navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
 
-// Initial check for available media devices
-navigator.mediaDevices.enumerateDevices()
-    .then(function (devices) {
-        setMediaInfo('Available media devices:' + JSON.stringify(devices));
-        console.log('Available media devices:', devices);
-    })
-    .catch(function (error) {
-        setMediaInfo('Error enumerating devices:' + JSON.stringify(error));
-        console.error('Error enumerating devices:', error);
-    });
-
 function getPlatform(agent) {
     if (/windows/i.test(agent)) {
         system.platform = "windows";
