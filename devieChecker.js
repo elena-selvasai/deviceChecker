@@ -18,8 +18,8 @@ setResult();
 window.addEventListener('resize', () => setTimeout(() => setWindowSize(), 300));
 
 function handleDeviceChange(event) {
-    console.log('Media devices changed:', event);
     setMediaInfo('Media devices changed:' + JSON.stringify(event));
+    console.log('Media devices changed:', event);
     // You can check event for specific changes and take appropriate actions
 }
 
@@ -29,11 +29,11 @@ navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
 // Initial check for available media devices
 navigator.mediaDevices.enumerateDevices()
     .then(function (devices) {
-        setMediaInfo('Available media devices:' + devices);
+        setMediaInfo('Available media devices:' + JSON.stringify(devices));
         console.log('Available media devices:', devices);
     })
     .catch(function (error) {
-        setMediaInfo('Error enumerating devices:'+ error);
+        setMediaInfo('Error enumerating devices:'+ JSON.stringify(error));
         console.error('Error enumerating devices:', error);
     });
 
